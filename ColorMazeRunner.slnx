@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="ColorMazeRunner/ColorMazeRunner.vcxproj" Id="b3e546e4-0cdc-4145-9119-0ef4e3d7c65e" />
+</Solution>
