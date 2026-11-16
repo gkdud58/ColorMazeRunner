@@ -146,7 +146,13 @@
     <None Include="vertex.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="1110_26.cpp" />
+    <ClCompile Include="(temp)obstacle.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="maze.cpp" />
+    <ClCompile Include="Shader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Shader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
