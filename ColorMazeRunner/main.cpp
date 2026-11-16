@@ -75,7 +75,7 @@ int main(int argc, char** argv)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	//--- 모니터 해상도에 맞춰 전체화면 윈도우 생성
+	//--- 윈도우 생성
 	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 	width = mode->width;
@@ -99,12 +99,12 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-	//--- 세이더 프로그램 만들기
+	//--- 세이더 읽어와서 세이더 프로그램 만들기
 	floorShader = new Shader("light_vertex.glsl", "light_fragment.glsl");
 
 
 
-	//--- 바닥, 장애물 VBO/VAO 생성하고 설정하기
+	//--- VBO, VAO 생성하고 설정하기
 	init_maze();
 	init_obstacle();
 

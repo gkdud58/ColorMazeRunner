@@ -19,7 +19,6 @@ namespace {
 			*pos = '\0';
 	}
 
-	// .obj 파일(v, f 라인만 사용)을 읽어온다.
 	void read_obj_file(const char* filename, Vertex** outVertices, size_t* outVertexCount, Face** outFaces, size_t* outFaceCount) {
 		FILE* file;
 		fopen_s(&file, filename, "r");
@@ -76,8 +75,6 @@ namespace {
 }
 
 
-// 바닥(임시). cube.obj(좌표 0~1)를 읽어 중심만 원점으로 옮겨서 올린다.
-// 법선은 obj의 vn을 쓰지 않고 각 삼각형에서 직접 계산해 중심 기준 바깥쪽을 향하도록 맞춘다.
 void init_maze() {
 	Vertex* vertices; size_t objVertexCount;
 	Face* faces; size_t faceCount;
@@ -122,10 +119,10 @@ void init_maze() {
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, n * 6 * sizeof(GLfloat), data, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*)0);                      // 위치
 	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));  // 법선
 	glEnableVertexAttribArray(1);
 
 	free(data);
@@ -134,12 +131,11 @@ void init_maze() {
 
 // ========================= 미로 그리는 용도 / 벽 추가 여기서 =========================
 
-const glm::vec3 FLOOR_COLOR = glm::vec3(0.85f, 0.85f, 0.85f);   // 흰색 바닥
-const float FLOOR_SIZE = 40.0f;                                 // 바닥 가로/세로 (임시 크기, 미로 생성 시 교체)
-const float FLOOR_THICKNESS = 0.4f;                              // 바닥 두께
+const glm::vec3 FLOOR_COLOR = glm::vec3(0.85f, 0.85f, 0.85f);
+const float FLOOR_SIZE = 40.0f;
+const float FLOOR_THICKNESS = 0.4f;
 
 void draw_maze(Shader* shader) {
-	// 큐브를 넓고 얇게 눌러서 바닥으로 사용 (윗면이 y = 0)
 	glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -FLOOR_THICKNESS * 0.5f, 0.0f))
 		* glm::scale(glm::mat4(1.0f), glm::vec3(FLOOR_SIZE, FLOOR_THICKNESS, FLOOR_SIZE));
 	shader->setMat4("model", model);

@@ -19,7 +19,6 @@ void read_newline(char* str) {
 		*pos = '\0';
 }
 
-	// .obj 파일(v, f 라인만 사용)을 읽어온다.
 void read_obj_file(const char* filename, Vertex** outVertices, size_t* outVertexCount, Face** outFaces, size_t* outFaceCount) {
 	FILE* file;
 	fopen_s(&file, filename, "r");
@@ -131,7 +130,7 @@ void init_obstacle() {
 
 // ========================= 큐브 그리는 용도 / 큐브추가 여기서 =========================
 
-const glm::vec3 OBSTACLE_COLOR = glm::vec3(0.8f, 1.0f, 0.8f);   // 흰색 큐브 (테스트용)
+const glm::vec3 OBSTACLE_COLOR = glm::vec3(0.8f, 1.0f, 0.8f);
 
 void draw_obstacle(Shader* shader) {
 	glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.5f, 0.0f))
