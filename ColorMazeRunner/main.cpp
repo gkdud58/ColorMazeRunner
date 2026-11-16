@@ -20,8 +20,8 @@ GLvoid drawScene();
 GLint width, height;
 Shader* floorShader = nullptr;
 
-// 카메라
-const glm::vec3 cameraPos = glm::vec3(0.0f, 6.0f, 14.0f);
+// 카메라 / 원점에 가까워지려면 z감소
+const glm::vec3 cameraPos = glm::vec3(0.0f, 10.0f, 30.0f);
 
 // 조명
 const glm::vec3 lightPos = glm::vec3(0.0f, 15.0f, 10.0f);
@@ -29,7 +29,7 @@ const glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f); // 조명 색
 
 //--- 그리기 콜백 함수
 GLvoid drawScene() {
-	glClearColor(0.05f, 0.05f, 0.08f, 1.0f);
+	glClearColor(0.5f, 0.7f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glEnable(GL_DEPTH_TEST);
