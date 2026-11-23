@@ -133,10 +133,18 @@ void init_obstacle() {
 const glm::vec3 OBSTACLE_COLOR = glm::vec3(0.8f, 1.0f, 0.8f);
 
 void draw_obstacle(Shader* shader) {
-	glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.5f, 0.0f))
-		* glm::scale(glm::mat4(1.0f), glm::vec3(2.0f));
-	shader->setMat4("model", model);
-	shader->setVec3("objectColor", OBSTACLE_COLOR);
 	glBindVertexArray(vao);
+
+	glm::mat4 model1 = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.5f, 0.0f))
+		* glm::scale(glm::mat4(1.0f), glm::vec3(2.0f));
+	shader->setMat4("model", model1);
+	shader->setVec3("objectColor", OBSTACLE_COLOR);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+
+
+	glm::mat4 model2 = glm::translate(glm::mat4(1.0f), glm::vec3(5.0f, 0.5f, 0.0f))
+		* glm::scale(glm::mat4(1.0f), glm::vec3(2.0f));
+	shader->setMat4("model", model2);
+	shader->setVec3("objectColor", OBSTACLE_COLOR);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 }

@@ -46,7 +46,7 @@ glm::mat4 Camera::viewMatrix() const
 
 glm::mat4 Camera::projectionMatrix(float aspect) const
 {
-	return glm::perspective(glm::radians(fov), aspect, 0.1f, 100.0f);
+	return glm::perspective(glm::radians(fov), aspect, 0.1f, 200.0f);
 }
 
 void Camera::processMouse(float dx, float dy)
