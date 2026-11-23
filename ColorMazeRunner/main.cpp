@@ -12,8 +12,10 @@
 //--- 사용자 정의 함수
 void init_maze();
 void draw_maze(Shader* shader);
-void init_obstacle();
-void draw_obstacle(Shader* shader);
+void init_item();
+void draw_item(Shader* shader);
+void init_enemy();
+void draw_enemy(Shader* shader);
 GLvoid drawScene();
 
 // ***************************************************************************************************************************************
@@ -54,7 +56,8 @@ GLvoid drawScene() {
 	floorShader->setInt("unlit", 0);
 
 	draw_maze(floorShader);
-	draw_obstacle(floorShader);
+	draw_item(floorShader);
+	draw_enemy(floorShader);
 
 	draw_gun(floorShader, camera);  //--- 총은 항상 맨 마지막에 (벽보다 앞에 보이게)
 }
@@ -134,7 +137,8 @@ int main(int argc, char** argv)
 
 	//--- VBO, VAO 생성하고 설정하기
 	init_maze();
-	init_obstacle();
+	init_item();
+	init_enemy();
 	init_gun();
 
 	//--- 카메라: 원점의 장애물에서 z+10 떨어진 곳에서 -z 방향(장애물 쪽)을 바라보며 시작

@@ -1,4 +1,4 @@
-﻿#include "Shader.h"
+#include "Shader.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -7,19 +7,20 @@
 #include <gl/glm/glm.hpp>
 #include <gl/glm/gtc/matrix_transform.hpp>
 
-const int MAX_LINE_LENGTH = 234;
+namespace {
+	const int MAX_LINE_LENGTH = 234;
 
-struct Vertex { float x, y, z; };
-struct Face { unsigned int v1, v2, v3; };
+	struct Vertex { float x, y, z; };
+	struct Face { unsigned int v1, v2, v3; };
 
 
-void read_newline(char* str) {
-	char* pos;
-	if ((pos = strchr(str, '\n')) != NULL)
-		*pos = '\0';
-}
+	void read_newline(char* str) {
+		char* pos;
+		if ((pos = strchr(str, '\n')) != NULL)
+			*pos = '\0';
+	}
 
-void read_obj_file(const char* filename, Vertex** outVertices, size_t* outVertexCount, Face** outFaces, size_t* outFaceCount) {
+	void read_obj_file(const char* filename, Vertex** outVertices, size_t* outVertexCount, Face** outFaces, size_t* outFaceCount) {
 	FILE* file;
 	fopen_s(&file, filename, "r");
 	if (!file) {
@@ -64,18 +65,18 @@ void read_obj_file(const char* filename, Vertex** outVertices, size_t* outVertex
 	}
 	fclose(file);
 
-	*outVertices = vertices;
-	*outVertexCount = vertexCount;
-	*outFaces = faces;
-	*outFaceCount = faceCount;
+		*outVertices = vertices;
+		*outVertexCount = vertexCount;
+		*outFaces = faces;
+		*outFaceCount = faceCount;
+	}
+
+	GLuint vao, vbo;
+	int vertexCount;
 }
 
 
-GLuint vao, vbo;
-int vertexCount;
-
-
-void init_obstacle() {
+void init_enemy() {
 	Vertex* vertices; size_t objVertexCount;
 	Face* faces; size_t faceCount;
 	read_obj_file("cube.obj", &vertices, &objVertexCount, &faces, &faceCount);
@@ -130,13 +131,13 @@ void init_obstacle() {
 
 // ========================= 큐브 그리는 용도 / 큐브추가 여기서 =========================
 
-const glm::vec3 OBSTACLE_COLOR = glm::vec3(0.8f, 1.0f, 0.8f);
+const glm::vec3 ENEMY_COLOR = glm::vec3(1.0f, 0.8f, 0.8f);
 
-void draw_obstacle(Shader* shader) {
-	glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.5f, 0.0f))
+void draw_enemy(Shader* shader) {
+	glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(5.0f, 0.5f, 0.0f))
 		* glm::scale(glm::mat4(1.0f), glm::vec3(2.0f));
 	shader->setMat4("model", model);
-	shader->setVec3("objectColor", OBSTACLE_COLOR);
+	shader->setVec3("objectColor", ENEMY_COLOR);
 	glBindVertexArray(vao);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 }

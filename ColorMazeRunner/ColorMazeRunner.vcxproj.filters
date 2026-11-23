@@ -29,9 +29,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="(temp)obstacle.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="camera.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -45,6 +42,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
