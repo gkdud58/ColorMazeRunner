@@ -7,6 +7,7 @@
 
 #include "Shader.h"
 #include "Camera.h"
+#include "gun.h"
 
 //--- 사용자 정의 함수
 void init_maze();
@@ -54,6 +55,8 @@ GLvoid drawScene() {
 
 	draw_maze(floorShader);
 	draw_obstacle(floorShader);
+
+	draw_gun(floorShader, camera);  //--- 총은 항상 맨 마지막에 (벽보다 앞에 보이게)
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -132,6 +135,7 @@ int main(int argc, char** argv)
 	//--- VBO, VAO 생성하고 설정하기
 	init_maze();
 	init_obstacle();
+	init_gun();
 
 	//--- 카메라: 원점의 장애물에서 z+10 떨어진 곳에서 -z 방향(장애물 쪽)을 바라보며 시작
 	camera = new Camera(glm::vec3(0.0f, PLAYER_EYE_HEIGHT, 10.0f), -90.0f);
@@ -153,6 +157,7 @@ int main(int argc, char** argv)
 		if (dt > 0.1f) dt = 0.1f;  // 창 이동 등으로 멈췄다 돌아왔을 때 순간이동 방지
 
 		camera->processKeyboard(window, dt);
+		update_gun(window, camera, dt);  //--- 좌클릭: 총열 회전 / 우클릭: 스코프 조준
 
 		drawScene();
 		glfwSwapBuffers(window);
