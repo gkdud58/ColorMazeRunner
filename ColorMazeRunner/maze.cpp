@@ -132,14 +132,60 @@ void init_maze() {
 // ========================= 미로 그리는 용도 / 벽 추가 여기서 =========================
 
 const glm::vec3 FLOOR_COLOR = glm::vec3(0.85f, 0.85f, 0.85f);
-const float FLOOR_SIZE = 40.0f;
+const float FLOOR_SIZE = 150.0f;
 const float FLOOR_THICKNESS = 0.4f;
 
+const float MAZE_SIZE = 120.0f;
+
+const glm::vec3 WALL_COLOR = glm::vec3(0.85f, 0.85f, 0.85f);
+const float WALL_THICKNESS = 0.2f;
+const float WAY_WIDE = 10.0f;
+
+// 입구 틈(WAY_WIDE)을 뺀 나머지 구간(틈 가장자리 ~ 옆벽)을 채우는 앞벽 한 쪽의 폭/중심
+const float wall4_width = (MAZE_SIZE / 2) - (WAY_WIDE / 2);
+const float wall4_center = ((WAY_WIDE / 2) + (MAZE_SIZE / 2)) / 2.0f;
+
+
 void draw_maze(Shader* shader) {
-	glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -FLOOR_THICKNESS * 0.5f, 0.0f))
-		* glm::scale(glm::mat4(1.0f), glm::vec3(FLOOR_SIZE, FLOOR_THICKNESS, FLOOR_SIZE));
-	shader->setMat4("model", model);
-	shader->setVec3("objectColor", FLOOR_COLOR);
 	glBindVertexArray(vao);
+
+	glm::mat4 floor = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -FLOOR_THICKNESS * 0.5f, 0.0f))
+		* glm::scale(glm::mat4(1.0f), glm::vec3(FLOOR_SIZE, FLOOR_THICKNESS, FLOOR_SIZE));
+	shader->setMat4("model", floor);
+	shader->setVec3("objectColor", FLOOR_COLOR);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+
+	// 오른쪽 벽
+	glm::mat4 wall1 = glm::translate(glm::mat4(1.0f), glm::vec3(MAZE_SIZE/2, 0.0f, 0.0f))
+		* glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 20.0f, MAZE_SIZE));
+	shader->setMat4("model", wall1);
+	shader->setVec3("objectColor", WALL_COLOR);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+
+	// 왼쪽벽
+	glm::mat4 wall2 = glm::translate(glm::mat4(1.0f), glm::vec3(-MAZE_SIZE/2, 0.0f, 0.0f))
+		* glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 20.0f, MAZE_SIZE));
+	shader->setMat4("model", wall2);
+	shader->setVec3("objectColor", WALL_COLOR);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+
+	// 출구(뒷벽)
+	glm::mat4 wall3 = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -(MAZE_SIZE/2)))
+		* glm::scale(glm::mat4(1.0f), glm::vec3(MAZE_SIZE, 20.0f, 1.0f));
+	shader->setMat4("model", wall3);
+	shader->setVec3("objectColor", WALL_COLOR);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+
+	// 입구(왼앞벽)
+	glm::mat4 wall4_1 = glm::translate(glm::mat4(1.0f), glm::vec3(wall4_center, 0.0f, MAZE_SIZE/2))
+		* glm::scale(glm::mat4(1.0f), glm::vec3(wall4_width, 20.0f, 1.0f));
+	shader->setMat4("model", wall4_1);
+	shader->setVec3("objectColor", WALL_COLOR);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+	// 입구(오앞벽)
+	glm::mat4 wall4_2 = glm::translate(glm::mat4(1.0f), glm::vec3(-wall4_center, 0.0f, MAZE_SIZE/2))
+		* glm::scale(glm::mat4(1.0f), glm::vec3(wall4_width, 20.0f, 1.0f));
+	shader->setMat4("model", wall4_2);
+	shader->setVec3("objectColor", WALL_COLOR);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 }
