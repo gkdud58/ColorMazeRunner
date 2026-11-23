@@ -21,7 +21,7 @@ GLint width, height;
 Shader* floorShader = nullptr;
 
 // 카메라 / 원점에 가까워지려면 z감소
-const glm::vec3 cameraPos = glm::vec3(0.0f, 25.0f, 85.0f);
+const glm::vec3 cameraPos = glm::vec3(0.0f, 10.0f, 30.0f);
 
 // 조명
 const glm::vec3 lightPos = glm::vec3(0.0f, 15.0f, 10.0f);
@@ -39,7 +39,7 @@ GLvoid drawScene() {
 
 	//--- 뷰잉 변환, 투영 변환
 	glm::mat4 view = glm::lookAt(cameraPos, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-	glm::mat4 proj = glm::perspective(glm::radians(75.0f), (float)width / (float)height, 0.1f, 200.0f);
+	glm::mat4 proj = glm::perspective(glm::radians(75.0f), (float)width / (float)height, 0.1f, 100.0f);
 	floorShader->setMat4("view", view);
 	floorShader->setMat4("projection", proj);
 
